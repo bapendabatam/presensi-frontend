@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dashboard Presensi</title>
+		<link rel="stylesheet" href="style.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body style="opacity: 0;">
+	<div id="status" class="modal-overlay"></div>
+	<div id="header"></div>
+	<div id="namaAcara"></div>
+	<div id="wrapperProgress">
+		<div id="detailWrapper">
+			<div class="detailAcara">
+				<div class="label">Lokasi:</div>
+				<div class="value" id="lokasi"></div>
+			</div>
+			<div class="detailAcara">
+				<div class="label">Tanggal:</div>
+				<div class="value" id="tanggal"></div>
+			</div>
+			<div class="detailAcara">
+				<div class="label">Jam Mulai:</div>
+				<div class="value" id="jam"></div>
+			</div>
+		</div>
+		<div class="wrapperProgress">
+			<div class="judulProgress">Progress Kehadiran Peserta</div>
+			<div id="progressPeserta" class="progress">
+				<div id="progressPesertaBar" class="progressBar"></div>
+				<div id="progressPesertaText" class="progressText"></div>
+			</div>
+		</div>
+		<div class="wrapperProgress">
+			<div class="judulProgress">Progress Kehadiran Organisasi</div>
+			<div id="progressSubGroup" class="progress">
+				<div id="progressSubGroupBar" class="progressBar"></div>
+				<div id="progressSubGroupText" class="progressText"></div>
+			</div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div class="card">
+			<div class="judulCard">Organisasi yang Belum Hadir</div>
+			<div id="jmlSubGroup"></div>
+			<div id="subGroupBlmHadir">
+				<!--
+				<div class="groupWrapper">
+					<div class="groupHeader">${subGroup}</div>
+					<ol class="groupList">
+						<li class="subGroupItem">Bappeda</li>
+						<li class="subGroupItem">Dishub</li>
+						<li class="subGroupItem">Bapenda</li>
+					</ol>
+				</div>
+				-->
+			</div>
+		</div>
+	</div>
+	<div id="diperbarui"></div>
+	<script type="module" src="dashboard.js"></script>
+	<script>
+		window.addEventListener('load', () => {
+			document.body.style.opacity = 1;
+		});
+	</script>
+  </body>
+</html>

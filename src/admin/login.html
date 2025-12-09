@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+	<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Login Admin</title>
+	<link rel="stylesheet" href="../style.css">
+	</head>
+	<body style="opacity: 0;">
+	<div id="status" class="modal-overlay"></div>
+	<div id="header"></div>
+	<div id="namaAcara"></div>
+	<div id="wrapper" class="flexShow">
+		<form id="formLogin" class="form">
+			<div class="inputForm">
+				<label>Username</label>
+				<input class="boxInput" type="text" name="username" required />
+			</div>
+
+			<div class="inputForm">
+				<label>Password</label>
+				<input class="boxInput" type="password" name="password" required />
+			</div>
+			
+			<button class="btn" type="submit">Submit</button>
+		</form>
+	</div>
+	<script type="module" src="login.js"></script>
+	<script>
+		window.addEventListener('load', () => {
+			document.body.style.opacity = 1;
+		});
+	</script>
+	</body>
+</html>

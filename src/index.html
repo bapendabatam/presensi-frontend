@@ -1,0 +1,66 @@
+<!-- presensi-frontend/src/index.html -->
+<!DOCTYPE html>
+<html lang="id">
+	<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- link rel="stylesheet" href="/leaflet/leaflet.css" / -->
+	<!-- link rel="stylesheet" href="/css/all.min.css" / -->
+	<title>Presensi</title>
+	<link rel="stylesheet" href="style.css">
+	</head>
+	<body style="opacity: 0;">
+	<div id="status" class="modal-overlay"></div>
+	<div id="header"></div>
+	<div id="namaAcara"></div>
+	<div id="detailWrapper">
+		<div class="detailAcara">
+			<div class="label">Lokasi:</div>
+			<div class="value" id="lokasi"></div>
+		</div>
+		<div class="detailAcara">
+			<div class="label">Tanggal:</div>
+			<div class="value" id="tanggal"></div>
+		</div>
+		<div class="detailAcara">
+			<div class="label">Jam Mulai:</div>
+			<div class="value" id="jam"></div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div id="map" class="map"></div>
+		<form id="formPresensi" class="form">
+			<div class="inputForm">
+				<label for="nama">Nama</label>
+				<input class="boxInput" type="text" name="nama" maxlength="100" required />
+			</div>
+
+			<div class="inputForm">
+				<label for="jabatan">Jabatan</label>
+				<input class="boxInput" type="text" name="jabatan" maxlength="100" required />
+			</div>
+			
+			<div class="inputForm">
+				<label for="noHp">No. HP</label>
+				<input class="boxInput" type="text" name="noHp" maxlength="20" pattern="[0-9+]*" required />
+			</div>
+
+			<div class="inputForm">
+				<label for="subGroup">Organisasi</label>
+				<select name="subGroup" id="subGroup">
+					<option value="">Memuat...</option>
+				</select>
+			</div>
+			
+			<button class="btn" type="submit">Submit</button>
+		</form>
+	</div>
+	<!-- script src="leaflet/leaflet.js"></script -->
+	<script type="module" src="form.js"></script>
+	<script>
+		window.addEventListener('load', () => {
+			document.body.style.opacity = 1;
+		});
+	</script>
+	</body>
+</html>

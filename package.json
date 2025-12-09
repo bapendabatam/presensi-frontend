@@ -1,0 +1,26 @@
+{
+	"name": "presensi-frontend",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"deploy": "npm run build && wrangler pages deploy dist",
+		"dev": "npm run build && wrangler pages dev dist",
+		"start": "npm run dev"
+	},
+	"devDependencies": {
+		"vite": "^7.2.2",
+		"wrangler": "^4.48.0"
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^7.1.0",
+		"choices.js": "^11.1.0",
+		"exceljs": "^4.4.0",
+		"html2canvas": "^1.4.1",
+		"jsontocsv": "^0.3.0",
+		"jspdf": "^3.0.4",
+		"leaflet": "^1.9.4",
+		"leaflet-control-geocoder": "^3.3.1",
+		"qrcode-svg": "^1.1.0"
+	}
+}

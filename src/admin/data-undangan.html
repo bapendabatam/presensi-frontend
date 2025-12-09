@@ -1,0 +1,89 @@
+<!-- presensi-frontend/src/admin/data-undangan.html -->
+<!DOCTYPE html>
+<html lang="id">
+	<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Data Undangan</title>
+	<link rel="stylesheet" href="../style.css">
+	</head>
+	<body style="opacity: 0;">
+	<div id="status" class="modal-overlay"></div>
+	<div id="header"></div>
+	<div id="namaAcara"></div>
+	<div id="detailWrapper">
+		<div class="detailAcara">
+			<div class="label">Lokasi:</div>
+			<div class="value" id="lokasi"></div>
+		</div>
+		<div class="detailAcara">
+			<div class="label">Tanggal:</div>
+			<div class="value" id="tanggal"></div>
+		</div>
+		<div class="detailAcara">
+			<div class="label">Jam Mulai:</div>
+			<div class="value" id="jam"></div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div class="btnWrapper">
+			<button class="btn" type="button" id="btnTambahUndangan"><i class="fa-solid fa-plus"></i>Tambah Undangan</button>
+			<button class="btn" type="button" id="btnImportUndangan"><i class="fa-solid fa-file-import"></i>Import Excel Undangan</button>
+		</div>
+		<div class="wrapperFloat" id="wrapperTambahUndangan">
+			<div class="modal-content">
+				<i class="fa-solid fa-circle-xmark close" onclick="closeFloat(this)"></i>
+				<form id="formTambahUndangan" class="form">
+					<div class="inputForm">
+						<label for="namaSubGroup">Nama Organisasi</label>
+						<input class="boxInput" type="text" name="namaSubGroup" list="subgroupList" maxlength="255" required />
+					</div>
+					<datalist id="subgroupList"></datalist>
+					
+					<div class="inputForm">
+						<label for="namaGroup">Nama Kelompok</label>
+						<input class="boxInput" type="text" name="namaGroup" list="groupList" maxlength="100" required />
+					</div>
+					<datalist id="groupList"></datalist>
+					
+					<button class="btn" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+		<div class="wrapperFloat" id="wrapperImportUndangan">
+			<div class="modal-content">
+				<i class="fa-solid fa-circle-xmark close" onclick="closeFloat(this)"></i>
+				<form id="formImportUndangan" class="form">
+					<div class="inputForm">
+						<label for="fileExcel">File Excel Undangan</label>
+						<input class="boxInput" type="file" name="fileExcel" accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required />
+					</div>
+					<button class="btn" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+		<div id="tabelDataUndangan" class="flexTable">
+			<div class="flex-row tabelHeader">
+				<div class="flex-cell col-no">No.</div>
+				<div class="flex-cell">Organisasi</div>
+				<div class="flex-cell">Kelompok</div>
+				<div class="flex-cell">Aksi</div>
+			</div>
+			<!--
+			<div class="flex-row">
+				<div class="flex-cell col-no" data-label="No"></div>
+				<div class="flex-cell" data-label="Organisasi"></div>
+				<div class="flex-cell" data-label="Kelompok"></div>
+				<div class="flex-cell" data-label="Aksi"></div>
+			</div>
+			-->
+		</div>
+	</div>
+	<script type="module" src="data-undangan.js"></script>
+	<script>
+		window.addEventListener('load', () => {
+			document.body.style.opacity = 1;
+		});
+	</script>
+	</body>
+</html>

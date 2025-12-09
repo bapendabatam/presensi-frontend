@@ -1,0 +1,752 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	transition: opacity 0.3s ease-in;
+}
+
+.logo {
+	height: 50px;
+}
+
+#wrapperProgress {
+	display: none;
+}
+
+.wrapperProgress {
+	margin: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.close {
+	align-self: flex-end; /* Posisikan tombol close di pojok kanan atas */
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	color: #1C6EA4;
+	font-size: 18px;
+}
+
+#wrapper {
+	display: none; /* to flex */
+	flex: 1;
+	flex-direction: column;
+	padding: 8px;
+	box-sizing: border-box;
+	align-items: center;
+}
+
+.wrapperFloat {
+	display: none; /* to flex */
+	position: fixed;
+	top: 0;
+	left: 0;
+	text-align: center;
+	font-size: 14px;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 999;
+	border-radius: 6px;
+}
+
+.modal-content {
+	/* Batasi lebar maksimal card agar tidak terlalu lebar di desktop */
+	max-width: 500px;
+	width: 90%; 
+	
+	/* Batasi tinggi maksimal card agar tidak memenuhi seluruh layar */
+	max-height: 90vh; /* 90% dari tinggi viewport (vh) */
+	
+	/* Tentukan bahwa konten di dalamnya bisa di-scroll jika melebihi max-height */
+	overflow-y: auto; 
+	
+	/* Styling tampilan card */
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+	position: relative; /* Penting untuk posisi tombol close */
+}
+
+.flexShow {
+	display: flex !important;
+}
+
+.modal-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	text-align: center;
+	font-size: 14px;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 1000;
+	border-radius: 6px;
+}
+
+.statusText {
+	flex: none;
+	margin-bottom: 15px;
+	font-size: 16px;
+}
+
+.loading, .warning, .success, .info {
+	position: relative;
+	padding: 20px;
+	width: 90%;
+	min-height: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+	text-align: center;
+	background-color: #fff;
+}
+
+.statusIcon {
+	font-size: 48px;
+	margin: 20px;
+}
+
+.iconWarning {
+	color: #ff6b6b;
+}
+
+.iconSuccess {
+	color: #74c476;
+}
+
+.iconInfo {
+	color: #FF5A00;
+}
+
+.iconLoading {
+	border: 8px solid #FFAA33;
+	border-top: 8px solid #1C6EA4;
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	animation: spin 1s linear infinite;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.aksiWrapper {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+}
+
+.iconAksi {
+	cursor: pointer;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+#header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	padding: 4px;
+}
+
+#menuWrapper {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.menuItem {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	padding: 8px;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	color: #005fcc;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	transition: all 0.1s ease;
+}
+
+.menuItem:visited {
+	color: #005fcc;
+}
+
+.menuItem:active {
+	transform: translateY(1px);
+	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+	background-color: #f0f0f0;
+}
+
+#judulHalaman {
+	flex: 1;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: right;
+	margin-right: 10px;
+	font-style: italic;
+	color: #444;
+}
+
+#namaAcara {
+	display: none;
+	font-weight: bold;
+	text-align: center;
+	font-size: 24px;
+	padding: 10px;
+	margin: 10px 0;
+	position: relative;
+	color: #444;
+}
+
+/* Garis dibawah namaAcara */
+#namaAcara::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px; /* jarak dari teks */
+  transform: translateX(-50%);
+  width: 80%; /* panjang garis */
+  height: 4px;
+  background: linear-gradient(to right, transparent, #1C6EA4, transparent);
+}
+
+#detailWrapper {
+	display: none; /* to grid */
+	grid-template-columns: max-content 1fr; /* kolom kiri otomatis mengikuti label terpanjang */
+	width: calc(100% - 16px); /* Sama dengan padding wrapper 8px */
+	margin: 10px;
+}
+
+.detailAcara {
+	display: contents; /* agar anak-anaknya (label dan value) masuk ke grid yang sama */
+}
+
+.value {
+	border: 1px solid #000;
+	padding: 4px;
+}
+
+.detailAcara .value {
+	border: none;
+}
+
+.map {
+	border: 1px solid #dddddd;
+	border-radius: 6px;
+	width: 100%;
+	height: 300px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	z-index: 0;
+}
+
+#mapMessage {
+	text-align: center;
+}
+
+.userPin {
+	color: red;
+	font-size: 32px;
+}
+
+.leaflet-control-geocoder-alternatives {
+	max-height: 250px;
+	overflow-y: scroll;
+	text-align: left;
+}
+
+#formLogin {
+	box-sizing: border-box;
+}
+
+#formPresensi {
+	display: none; /* harus none by default */
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+	box-sizing: border-box;
+	margin-top: 16px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.inputForm {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #dddddd;
+	font-size: 14px;
+	margin: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    border-radius: 6px;
+	box-sizing: border-box;
+	width: 100%;
+	align-items: center;
+	gap: 16px;
+}
+
+label {
+	font-weight: bold;
+	padding: 4px;
+	display: block;
+}
+
+.label {
+	font-weight: bold;
+	padding: 4px;
+}
+
+.input-note {
+	font-size: 1em; 
+	color: #777; 
+	margin-top: -6px; 
+	margin-bottom: 8px;
+	display: block; 
+	font-style: italic; 
+}
+
+.judulCard {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.judulProgress {
+	font-weight: bold;
+}
+
+.progress {
+	position: relative;
+	width: 100%;
+	background-color: #ccc;
+	overflow: hidden;
+	height: 24px;
+	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+}
+
+.progressBar {
+	border-radius: 4px;
+	background: linear-gradient(to bottom, #4caf50, #2e7d32);
+	box-shadow:
+		inset 0 2px 4px rgba(255, 255, 255, 0.3), /* efek cahaya di dalam */
+		0 4px 6px rgba(0, 0, 0, 0.3); /* bayangan luar */
+	height: 24px;
+	width: 0%;
+	transition: width 0.5s ease;
+}
+
+.progressText {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	text-align: center;
+	line-height: 24px;
+	font-weight: bold;
+	color: #fff;
+}
+
+#diperbarui {
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	padding: 8px;
+}
+
+.boxInput {
+	padding: 12px;
+	border: none;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+	box-sizing: border-box;
+	width: 100%;
+	text-align: center;
+}
+
+/*
+.dropdownBtn {
+	background-color: #ffffff;
+	color: #000000;
+	padding: 12px;
+	font-size: 14px;
+	cursor: pointer;
+	display: flex;
+	text-align: left;
+	justify-content: space-between;
+	border: none;
+	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+}
+
+.dropdown {
+	position: relative;
+	display: block;
+}
+
+.dropdownContent {
+	display: none;
+	background-color: #f6f6f6;
+	min-width: 100%;
+	border: 1px solid #ddd;
+	z-index: 10;
+	max-weight: 250px;
+	overflow: auto;
+}
+
+.dropdownContent.show {
+	display: block;
+}
+
+#inputSubGroup {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+}
+
+.dropdownItem {
+	padding: 10px;
+	cursor: pointer;
+}
+
+.dropdownItem:hover {
+	background-color: #e6e6e6;
+}
+*/
+
+/* === Choices.js === */
+/* Container Choices.js (Mengganti tampilan .dropdownBtn) */
+.choices {
+	margin-bottom: 0; /* Menghilangkan margin default Choices.js */
+	box-sizing: border-box;
+	width: 100%; /* Penting untuk mengambil lebar penuh .inputForm */
+}
+
+/* Tampilan input/tombol Choices.js saat tidak fokus */
+.choices__inner {
+	padding: 12px 12px 12px 12px; /* Sesuaikan padding agar sama dengan .dropdownBtn */
+	border: none !important; /* Hapus border default Choices.js */
+	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15); /* Shadow yang sama */
+	border-radius: 4px;
+	background-color: #ffffff; /* Latar belakang putih */
+	min-height: auto; /* Agar Choices.js tidak memaksakan tinggi */
+	display: flex; /* Untuk meratakan konten */
+	align-items: center;
+	box-sizing: border-box;
+}
+
+/* Teks placeholder */
+.choices__placeholder {
+	opacity: 1;
+	color: #000000;
+}
+
+.choices__list {
+	box-sizing: border-box;
+}
+
+/* Container dropdown saat terbuka (Mengganti .dropdownContent) */
+.choices__list--dropdown {
+	border: 1px solid #ddd; /* Border yang sama */
+	background-color: #f6f6f6; /* Latar belakang yang sama */
+	z-index: 10;
+	margin-top: 4px; /* Sedikit jarak dari input utama */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tambahkan shadow agar lebih menonjol */
+	border-radius: 4px;
+}
+
+/* Input Pencarian (Mengganti #inputSubGroup) */
+.choices__list--dropdown .choices__input {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background-color: #fff;
+	font-size: 14px;
+	margin: 0;
+}
+
+/* Item Pilihan dalam dropdown (Mengganti .dropdownItem) */
+.choices__list--dropdown .choices__item {
+	padding: 10px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.15s ease;
+}
+
+/* Hover effect (Mengganti .dropdownItem:hover) */
+.choices__list--dropdown .choices__item--selectable:hover {
+	background-color: #e6e6e6; /* Hover yang sama */
+}
+
+/* Hilangkan style item yang dipilih/di-*highlight* */
+.choices__list--dropdown .choices__item--highlighted {
+	background-color: #e6e6e6; /* Gunakan warna hover yang sama */
+}
+/* === End of Choices.js === */
+
+.btn {
+	display: flex;
+	gap: 8px;
+	padding: 12px;
+	border-radius: 6px;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	background: linear-gradient(to bottom, #5aa9ff, #007bff);
+	box-shadow: 0 4px 0 #005fcc, 0 3px 8px rgba(0, 0, 0, 0.3);
+	transition: all 0.15s ease;
+	font-weight: bold;
+	width: fit-content;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn:active {
+	transform: translateY(2px);
+	background: linear-gradient(to bottom, #3f8efc, #0069d9);
+	box-shadow:
+    0 1px 0 #004da8 inset,       /* shadow ke dalam */
+    0 2px 4px rgba(0, 0, 0, 0.3) inset;
+}
+
+.btnWrapper {
+	display: flex;
+	gap: 8px;
+	margin: 16px;
+	align-items: center;
+	justify-content: center;
+}
+
+#btnLogout {
+	margin: 8px;
+}
+
+#subGroupBlmHadir {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+}
+
+.groupWrapper {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	border-radius: 8px;
+	max-width: 300px;
+	box-sizing: border-box;
+}
+
+.groupList {
+	counter-reset: num;
+	list-style: none;
+	padding: 0;
+}
+
+.groupHeader {
+	font-weight: bold;
+	background-color: #1C6EA4;
+	color: #fff;
+	border-radius: 4px;
+	padding: 4px;
+	text-align: center;
+}
+
+.groupList li {
+	padding: 4px;
+}
+
+.groupList li:nth-child(odd) {
+	background-color: #fff;
+}
+
+.groupList li:nth-child(even) {
+	background-color: #eee;
+}
+
+.groupList li {
+	counter-increment: num;
+	padding-left: 1.8em;
+	position: relative;
+}
+
+.groupList li::before {
+	content: counter(num) ".";
+	position: absolute;
+	left: 0;
+	background-color: #fff;
+}
+
+.groupList li:nth-child(even)::before {
+	background-color: #eee;
+}
+
+.kedip, .kedip::before {
+	animation: kedip 0.6s ease-in-out;
+	background: yellow;
+}
+
+@keyframes kedip {
+	0%   { background: yellow; }
+	50%  { background: transparent; }
+	100% { background: yellow; }
+}
+
+.flexTable {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #ddd;
+	width: 100%;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	box-sizing: border-box;
+}
+
+.col-no {
+	flex: 0 0 32px;
+	max-width: 32px;
+	justify-content: center;
+}
+
+.flex-row {
+	display: flex;
+	width: 100%;
+	border-bottom: 1px solid #eee;
+	box-sizing: border-box;
+}
+
+.flex-row:nth-child(odd) {
+	background-color: #ffffff;
+}
+
+.flex-row:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.flex-row.tabelHeader {
+	background-color: #1c6ea4 !important;
+}
+
+.flex-row:not(.tabelHeader):hover {
+	background-color: #f9f9f9;
+}
+
+.tabelHeader {
+	font-weight: bold;
+	border-bottom: 2px solid #ddd;
+	color: #fff;
+}
+
+.tabelHeader .flex-cell {
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.flex-cell {
+	flex: 1;
+	padding: 12px 15px;
+	text-align: left;
+	display: flex;
+	align-items: left;
+	word-break: break-word;
+}
+
+.flex-cell:not(:last-child) {
+	border-right: 1px solid #eee;
+}
+
+.coordinateInput {
+	display: flex;
+	gap: 10px;
+	margin: 10px auto;
+}
+
+.readonlyStyle {
+	background-color: #f0f0f0 !important;
+	color: #555555 !important;
+	box-shadow: none !important;
+	border-color: #cccccc !important;
+	cursor: not-allowed !important;
+}
+
+.readonlyStyle:focus {
+	outline: none !important;
+	border-color: #cccccc !important;
+}
+
+@media (max-width: 768px) {
+	.tabelHeader {
+		display: none;
+	}
+	
+	.col-no {
+		max-width: 100%;
+		flex: 1;
+		justify-content: flex-start;
+	}
+	
+	.flex-row {
+		flex-direction: column;
+		border: 1px solid #ccc;
+		margin-bottom: 10px;
+		border-radius: 5px;
+		padding: 10px;
+	}
+	
+	.flex-cell {
+		border-right: none !important;
+		border-bottom: 1px solid #eee;
+		padding: 8px 0;
+		width: 100%;
+	}
+	
+	.flex-cell:last-child {
+		border-bottom: none;
+	}
+	
+	.flex-cell::before {
+		content: attr(data-label);
+		font-weight: bold;
+		width: 120px;
+		color: #666;
+	}
+	
+	.aksiWrapper {
+		text-align: left;
+		align-items: flex-start;
+		justify-content: flex-start;
+	}
+}

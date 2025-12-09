@@ -1,0 +1,73 @@
+// presensi-frontend/src/admin/login.js
+
+import '@fortawesome/fontawesome-free/css/all.css';
+import { showStatus, cleanOnError, closeStatus } from '../utils/status.js';
+import { API_URL, FRONTEND_ORIGIN } from '../utils/server.js';
+import { setupHeader } from '../utils/header.js';
+
+const params = new URLSearchParams(window.location.search);
+const redirectTarget = params.get('redirect');
+const defaultSuccessPath = '/admin/index';
+
+console.log(`[DEBUG] redirectTarget dari URL: ${redirectTarget}`);
+
+document.getElementById("formLogin").addEventListener("submit", async (e) => {
+	e.preventDefault();
+	
+	const username = e.target.username.value.trim();
+	const password = e.target.password.value;
+	
+	if (!username || !password) {
+		showStatus('warning', 'Silakan isi username dan password.');
+		return;
+	}
+	
+	showStatus('loading', 'Sedang memverifikasi...');
+	
+	try {
+		const payloadRedirect = redirectTarget || defaultSuccessPath;
+        console.log(`[DEBUG] Payload Redirect yang Dikirim: ${payloadRedirect}`);
+		
+		const response = await fetch(`${API_URL}/api/auth/login`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username,
+				password,
+				redirect: payloadRedirect
+			}),
+			credentials: 'include'
+		});
+		
+		const result = await response.json();
+		
+		console.log('[DEBUG] Response Body (result):', result);
+		
+		if (response.ok) {
+			showStatus('success', 'Login berhasil! Mengalihkan...');
+			
+			const finalRedirectPath = result.redirect || defaultSuccessPath;
+			
+			console.log(`[DEBUG] Final Redirect Path: ${finalRedirectPath}`);
+			
+			// Karena Worker berada di domain/port 8787, dan Frontend di 8788 (asumsi), 
+			// kita harus membangun URL lengkap ke Frontend.
+			// Asumsi: Frontend berjalan di https://192.168.101.72:8788
+			//const FRONTEND_ORIGIN = API_URL.replace('8787', '8788');
+			
+			// Redirect
+			setTimeout(() => {
+				window.location.href = `${FRONTEND_ORIGIN}${finalRedirectPath}`;
+			}, 1000);
+		} else {
+			showStatus('warning', result.error || 'Login gagal.');
+		}
+	} catch (error) {
+		console.error("Error:", error);
+		showStatus('warning', 'Gagal terhubung ke server.');
+	}
+});
+
+setupHeader('Login Admin');

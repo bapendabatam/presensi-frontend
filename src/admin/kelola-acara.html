@@ -1,0 +1,106 @@
+<!-- presensi-frontend/src/admin/kelola-acara.html -->
+
+<!DOCTYPE html>
+<html lang="id">
+	<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Kelola Acara</title>
+	<link rel="stylesheet" href="../style.css">
+	</head>
+	<body style="opacity: 0;">
+	<div id="status" class="modal-overlay"></div>
+	<div id="header"></div>
+	<div id="wrapper">
+		<div class="btnWrapper">
+			<button class="btn" type="button" id="btnTambahAcara"><i class="fa-solid fa-plus"></i>Tambah Acara</button>
+		</div>
+		<div class="wrapperFloat" id="wrapperTambahAcara">
+			<div class="modal-content">
+				<i class="fa-solid fa-circle-xmark close" onclick="closeFloat(this)"></i>
+				<form id="formTambahAcara" class="form">
+					<div class="inputForm">
+						<label for="namaAcara">Nama Acara</label>
+						<input class="boxInput" type="text" name="namaAcara" maxlength="100" required />
+					</div>
+	
+					<div class="inputForm">
+						<label for="tanggal">Tanggal</label>
+						<input class="boxInput" type="date" name="tanggal" required />
+					</div>
+					
+					<div class="inputForm">
+						<label for="jamMulai">Jam Mulai</label>
+						<input class="boxInput" type="time" name="jamMulai" required />
+					</div>
+					
+					<div class="inputForm">
+						<label for="lokasi">Lokasi</label>
+						<input class="boxInput" type="text" name="lokasi" maxlength="255" required />
+					</div>
+
+					<div class="inputForm">
+						<label for="koordinatInput">Koordinat (Latitude, Longitude)</label>
+						<div class="input-note">Bisa diisi otomatis saat Anda klik pada peta atau tombol Dapatkan Lokasi Saya.</div>
+						<input class="boxInput" type="text" id="koordinatInput" name="koordinatInput" placeholder="Latitude, Longitude" required></input>
+						<button class="btn" type="button" id="btnLokasiSaya"><i class="fa-solid fa-map-pin"></i>Dapatkan Lokasi Saya</button>
+						<div id="map" class="map"></div>
+					</div>
+
+					<div class="inputForm">
+						<label for="radius">Radius</label>
+						<input class="boxInput" type="number" name="radius" value="100" required />
+					</div>
+					
+					<div class="inputForm">
+						<label for="jmlPeserta">Jml. Peserta</label>
+						<input class="boxInput" type="number" name="jmlPeserta" required />
+					</div>
+					
+					<button class="btn" type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+		<div id="tabelDataAcara" class="flexTable">
+			<div class="flex-row tabelHeader">
+				<div class="flex-cell col-no">No.</div>
+				<div class="flex-cell">Nama Acara</div>
+				<div class="flex-cell">Tanggal</div>
+				<div class="flex-cell">Jam Mulai</div>
+				<div class="flex-cell">Lokasi</div>
+				<div class="flex-cell">Latitude</div>
+				<div class="flex-cell">Longitude</div>
+				<div class="flex-cell">Radius</div>
+				<div class="flex-cell">Jml. Peserta</div>
+				<div class="flex-cell">Undangan</div>
+				<div class="flex-cell">Data Presensi</div>
+				<div class="flex-cell">Link Presensi</div>
+				<div class="flex-cell">Aksi</div>
+			</div>
+			<!--
+			<div class="flex-row">
+				<div class="flex-cell col-no" data-label="No"></div>
+				<div class="flex-cell" data-label="Nama Acara"></div>
+				<div class="flex-cell" data-label="Tanggal"></div>
+				<div class="flex-cell" data-label="Jam Mulai"></div>
+				<div class="flex-cell" data-label="Lokasi"></div>
+				<div class="flex-cell" data-label="Latitude"></div>
+				<div class="flex-cell" data-label="Longitude"></div>
+				<div class="flex-cell" data-label="Radius"></div>
+				<div class="flex-cell" data-label="Jml. Peserta"></div>
+				<div class="flex-cell" data-label="Undangan"></div>
+				<div class="flex-cell" data-label="Data Presensi"></div>
+				<div class="flex-cell" data-label="Link Presensi"></div>
+				<div class="flex-cell" data-label="Aksi"></div>
+			</div>
+			-->
+		</div>
+	</div>
+	<script type="module" src="kelola-acara.js"></script>
+	<script>
+		window.addEventListener('load', () => {
+			document.body.style.opacity = 1;
+		});
+	</script>
+	</body>
+</html>

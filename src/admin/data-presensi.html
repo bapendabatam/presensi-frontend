@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+	<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Data Presensi</title>
+	<link rel="stylesheet" href="../style.css">
+	</head>
+	<body style="opacity: 0;">
+	<div id="status" class="modal-overlay"></div>
+	<div id="header"></div>
+	<div id="namaAcara"></div>
+	<div id="detailWrapper">
+		<div class="detailAcara">
+			<div class="label">Lokasi:</div>
+			<div class="value" id="lokasi"></div>
+		</div>
+		<div class="detailAcara">
+			<div class="label">Tanggal:</div>
+			<div class="value" id="tanggal"></div>
+		</div>
+		<div class="detailAcara">
+			<div class="label">Jam Mulai:</div>
+			<div class="value" id="jam"></div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div class="btnWrapper">
+			<button class="btn" type="button" id="btnExportXlsx"><i class="fa-solid fa-file-excel"></i>Export Excel</button>
+		</div>
+		<div id="tabelDataPresensi" class="flexTable">
+			<div class="flex-row tabelHeader">
+				<div class="flex-cell col-no">No.</div>
+				<div class="flex-cell">Waktu</div>
+				<div class="flex-cell">Nama</div>
+				<div class="flex-cell">Jabatan</div>
+				<div class="flex-cell">No. HP</div>
+				<div class="flex-cell">Organisasi</div>
+				<div class="flex-cell">Latitude</div>
+				<div class="flex-cell">Longitude</div>
+				<div class="flex-cell">ID Device</div>
+			</div>
+			<!--
+			<div class="flex-row">
+				<div class="flex-cell col-no" data-label="No"></div>
+				<div class="flex-cell" data-label="Waktu"></div>
+				<div class="flex-cell" data-label="Nama"></div>
+				<div class="flex-cell" data-label="Jabatan"></div>
+				<div class="flex-cell" data-label="No. HP"></div>
+				<div class="flex-cell" data-label="Organisasi"></div>
+				<div class="flex-cell" data-label="Latitude"></div>
+				<div class="flex-cell" data-label="Longitude"></div>
+				<div class="flex-cell" data-label="IdDevice"></div>
+			</div>
+			-->
+		</div>
+	</div>
+	<script type="module" src="data-presensi.js"></script>
+	<script>
+		window.addEventListener('load', () => {
+			document.body.style.opacity = 1;
+		});
+	</script>
+	</body>
+</html>
