@@ -1,3 +1,5 @@
+// presensi-frontend/wrangler.jsonc
+
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "presensi-frontend",
