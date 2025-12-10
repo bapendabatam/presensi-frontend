@@ -7,7 +7,7 @@ import { setupHeader } from '../utils/header.js';
 
 const params = new URLSearchParams(window.location.search);
 const redirectTarget = params.get('redirect');
-const defaultSuccessPath = '/admin/index';
+const defaultSuccessPath = 'culprit';
 
 console.log(`[DEBUG] redirectTarget dari URL: ${redirectTarget}`);
 
@@ -51,11 +51,6 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
 			const finalRedirectPath = result.redirect || defaultSuccessPath;
 			
 			console.log(`[DEBUG] Final Redirect Path: ${finalRedirectPath}`);
-			
-			// Karena Worker berada di domain/port 8787, dan Frontend di 8788 (asumsi), 
-			// kita harus membangun URL lengkap ke Frontend.
-			// Asumsi: Frontend berjalan di https://192.168.101.72:8788
-			//const FRONTEND_ORIGIN = API_URL.replace('8787', '8788');
 			
 			// Redirect
 			setTimeout(() => {
