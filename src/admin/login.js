@@ -54,7 +54,7 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
 			
 			// Redirect
 			setTimeout(() => {
-				window.location.href = `${finalRedirectPath}`;
+				window.location.href = `${FRONTEND_ORIGIN}${finalRedirectPath}`;
 			}, 1000);
 		} else {
 			showStatus('warning', result.error || 'Login gagal.');
