@@ -7,7 +7,7 @@ import { setupHeader } from '../utils/header.js';
 
 const params = new URLSearchParams(window.location.search);
 const redirectTarget = params.get('redirect');
-const defaultSuccessPath = 'culprit';
+const defaultSuccessPath = '/admin/index';
 
 console.log(`[DEBUG] redirectTarget dari URL: ${redirectTarget}`);
 
