@@ -11,6 +11,16 @@ const defaultSuccessPath = '/admin/kelola-acara';
 
 console.log(`[DEBUG] redirectTarget dari URL: ${redirectTarget}`);
 
+const response = await fetch(`${API_URL}/api/auth/verify-session`, {
+	method: 'GET',
+	credentials: 'include',
+});
+	
+if (response.ok) {
+	showStatus('info', 'Anda sudah login. Mengalihkan ke halaman Kelola Acara');
+	window.location.href = `${FRONTEND_ORIGIN}${defaultSuccessPath}`;
+}
+
 document.getElementById("formLogin").addEventListener("submit", async (e) => {
 	e.preventDefault();
 	
@@ -26,7 +36,7 @@ document.getElementById("formLogin").addEventListener("submit", async (e) => {
 	
 	try {
 		const payloadRedirect = redirectTarget || defaultSuccessPath;
-        console.log(`[DEBUG] Payload Redirect yang Dikirim: ${payloadRedirect}`);
+		console.log(`[DEBUG] Payload Redirect yang Dikirim: ${payloadRedirect}`);
 		
 		const response = await fetch(`${API_URL}/api/auth/login`, {
 			method: 'POST',

@@ -2,11 +2,13 @@
 
 import '@fortawesome/fontawesome-free/css/all.css';
 import { showStatus, cleanOnError, closeStatus } from '../utils/status.js';
-import { API_URL, WS_URL } from '../utils/server.js';
+import { API_URL, WS_URL, FRONTEND_ORIGIN } from '../utils/server.js';
 import { setupLogout } from '../utils/logout.js';
 import { setupHeader } from '../utils/header.js';
 
 if (checkAdminAuth()) {
+	// Karena belum ada dashboard adminnya
+	window.location.href = `${FRONTEND_ORIGIN}/admin/kelola-acara`;
 }
 
 async function checkAdminAuth() {
