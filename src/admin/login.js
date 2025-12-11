@@ -7,7 +7,7 @@ import { setupHeader } from '../utils/header.js';
 
 const params = new URLSearchParams(window.location.search);
 const redirectTarget = params.get('redirect');
-const defaultSuccessPath = '/admin/index';
+const defaultSuccessPath = '/admin/kelola-acara';
 
 console.log(`[DEBUG] redirectTarget dari URL: ${redirectTarget}`);
 

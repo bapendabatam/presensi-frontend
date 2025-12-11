@@ -32,7 +32,7 @@ export function setupHeader(namaHalaman) {
 			menuWrapper.id = 'menuWrapper';
 			
 			// Menu Kelola Acara
-			if (namaHalaman !== 'Kelola Acara') {
+			if (namaHalaman !== 'Kelola Acara' && namaHalaman !== 'Login Admin') {
 				const menuKelolaAcara = document.createElement('a');
 				menuKelolaAcara.classList.add('menuItem');
 				menuKelolaAcara.href = '/admin/kelola-acara';
