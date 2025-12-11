@@ -1,12 +1,12 @@
 // presensi-frontend/src/utils/server.js
 
-//const WORKER_DOMAIN = '192.168.101.72:8787';
-//const WORKER_DOMAIN = '192.168.0.20:8787';
-const WORKER_DOMAIN = 'presensi-backend.bapendabatam.workers.dev';
+const API_URL_RAW = import.meta.env.VITE_API_URL;
+const WS_URL_RAW = import.meta.env.VITE_WS_URL;
+const FRONTEND_ORIGIN_RAW = import.meta.env.VITE_FRONTEND_ORIGIN;
 
-//export const FRONTEND_ORIGIN = 'https://192.168.101.72:8788';
-//export const FRONTEND_ORIGIN = 'https://192.168.0.20:8788';
-export const FRONTEND_ORIGIN = 'https://presensi-acara-bapendabatam.pages.dev';
+console.log(`[DEBUG SERVER] VITE_API_URL: ${API_URL_RAW}`);
+console.log(`[DEBUG SERVER] VITE_FRONTEND_ORIGIN: ${FRONTEND_ORIGIN_RAW}`);
 
-export const API_URL = `https://${WORKER_DOMAIN}`;
-export const WS_URL = `wss://${WORKER_DOMAIN}`;
+export const API_URL = API_URL_RAW;
+export const WS_URL = WS_URL_RAW;
+export const FRONTEND_ORIGIN = FRONTEND_ORIGIN_RAW;
