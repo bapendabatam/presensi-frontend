@@ -50,6 +50,13 @@ export function showStatus(type, message) {
 			return;
 	}
 	
+	// Tampilkan body
+	const bodyElement = document.body;
+	const currentOpacity = bodyElement.style.opacity;
+	if (currentOpacity === '0') {
+		bodyElement.style.opacity = '1';
+	}
+	
 	// Tampilkan status container
 	statusDiv.style.display = "flex"; 
 	

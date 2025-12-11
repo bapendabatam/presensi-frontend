@@ -38,7 +38,6 @@ async function initApp() {
 	// Cek auth
 	const authenticated = await checkAdminAuth();
 	if (!authenticated) return;
-	closeStatus();
 	
 	showStatus('loading', 'Memuat...');
 	
