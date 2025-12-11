@@ -24,7 +24,8 @@ L.Icon.Default.mergeOptions({
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
-let choicesInstance = null;
+let subGroupChoicesInstance = null;
+let genderChoicesInstance = null;
 
 const params = new URLSearchParams(window.location.search);
 const idAcara = params.get('acara');
@@ -51,8 +52,14 @@ if (!idAcara || idAcara.trim() === "") {
 		
 		let idSubGroup;
 		
-		if (choicesInstance) {
-			idSubGroup = choicesInstance.getValue(true) || "";
+		if (subGroupChoicesInstance) {
+			idSubGroup = subGroupChoicesInstance.getValue(true) || "";
+		}
+		
+		let idGender;
+		
+		if (genderChoicesInstance) {
+			idGender = subGroupChoicesInstance.getValue(true) || "";
 		}
 		
 		// === VALIDASI INPUT ===
@@ -107,9 +114,20 @@ if (!idAcara || idAcara.trim() === "") {
 			showStatus('warning', 'Organisasi wajib dipilih!');
 			return;
 		}
-		// Tambahan: Pastikan nilainya adalah angka (sebagai ID)
+		// Pastikan nilainya adalah angka (sebagai ID)
 		if (isNaN(parseInt(idSubGroup))) {
 			showStatus('warning', 'Organisasi yang dipilih tidak valid.');
+			return;
+		}
+		
+		// Validasi ID gender (Wajib dipilih)
+		if (!idGender) {
+			showStatus('warning', 'Gender wajib dipilih!');
+			return;
+		}
+		// Pastikan nilainya adalah angka (sebagai ID)
+		if (isNaN(parseInt(idGender))) {
+			showStatus('warning', 'Gender yang dipilih tidak valid.');
 			return;
 		}
 		// === END OF VALIDASI INPUT ===
@@ -119,6 +137,7 @@ if (!idAcara || idAcara.trim() === "") {
 			idAcara: idAcara,
 			nama: nama,
 			jabatan: jabatan,
+			gender: gender,
 			noHp: noHp,
 			latitude: usrLat,
 			longitude: usrLng,
@@ -225,8 +244,8 @@ if (!idAcara || idAcara.trim() === "") {
 				e.target.jabatan.value = "";
 				e.target.noHp.value = "";
 				
-				if (choicesInstance) {
-					choicesInstance.setChoiceByValue('');
+				if (subGroupChoicesInstance) {
+					subGroupChoicesInstance.setChoiceByValue('');
 				}
 			} else {
 				showStatus('warning', result.error || result.message);
@@ -373,17 +392,17 @@ async function tampilForm(data) {
 	document.getElementById("formPresensi").style.display = 'flex';
 	closeStatus();
 	
-	//tampilSubGroup(data.subGroup);
-	initChoices(data.subGroup);
+	initSubGroupChoices(data.subGroup);
+	initGenderChoices();
 }
 
-function initChoices(subGroup) {
+function initSubGroupChoices(subGroup) {
 	const selectElement = document.getElementById("subGroup");
 	
 	selectElement.innerHTML = '';
 
-	if (choicesInstance) {
-		choicesInstance.destroy();
+	if (subGroupChoicesInstance) {
+		subGroupChoicesInstance.destroy();
 		selectElement.innerHTML = '';
 	}
 	
@@ -403,7 +422,7 @@ function initChoices(subGroup) {
 		disabled: true,
 	});
 	
-	choicesInstance = new Choices(selectElement, {
+	subGroupChoicesInstance = new Choices(selectElement, {
 		shouldSort: false,
 		allowHTML: true,
 		placeholder: true,
