@@ -33,7 +33,15 @@ L.Icon.Default.mergeOptions({
 	shadowUrl: markerShadow,
 });
 
-if (checkAdminAuth()) {
+async function initApp() {
+	showStatus('loading', 'Memeriksa autentikasi...');
+	// Cek auth
+	const authenticated = await checkAdminAuth();
+	if (!authenticated) return;
+	closeStatus();
+	
+	showStatus('loading', 'Memuat...');
+	
 	const ws = new WebSocket(`${WS_URL}/ws/?acara=all`);
 	
 	let isErrorHandled = false;
@@ -53,7 +61,8 @@ if (checkAdminAuth()) {
 		const data = JSON.parse(event.data);
 		
 		if (data.type === "data_acara") {
-			console.log("Menerima Data Acara:", data);
+			// Data acara diterima, maka closeStatus yg lama
+			closeStatus();
 			
 			const dataAcara = data.results;
 			
@@ -86,7 +95,10 @@ if (checkAdminAuth()) {
 					<div class="flex-cell" data-label="Jml. Peserta">${item.jml_peserta}</div>
 					<div class="flex-cell aksiWrapper" data-label="Undangan"><a href="data-undangan?acara=${item.id_acara}"><i class="fa-solid fa-eye iconAksi"></i></a></div>
 					<div class="flex-cell aksiWrapper" data-label="Data Presensi"><a href="data-presensi?acara=${item.id_acara}"><i class="fa-solid fa-eye iconAksi"></i></a></div>
-					<div class="flex-cell aksiWrapper" data-label="Link Presensi"><a href="/?acara=${item.id_acara}"><i class="fa-solid fa-link iconAksi"></i></a></div>
+					<div class="flex-cell aksiWrapper" data-label="Link Presensi">
+						<a href="/?acara=${item.id_acara}"><i class="fa-solid fa-link iconAksi"></i></a>
+						<a href="/dashboard?acara=${item.id_acara}"><i class="fa-solid fa-gauge iconAksi"></i></a>
+					</div>
 					<div class="flex-cell aksiWrapper" data-label="Aksi"><i class="fa-solid fa-edit iconAksi"></i><i class="fa-solid fa-trash iconAksi"></i></div>
 				`;
 				
@@ -114,7 +126,10 @@ if (checkAdminAuth()) {
 					<div class="flex-cell" data-label="Jml. Peserta">${item.jml_peserta}</div>
 					<div class="flex-cell aksiWrapper" data-label="Undangan"><a href="data-undangan?acara=${item.id_acara}"><i class="fa-solid fa-eye iconAksi"></i></a></div>
 					<div class="flex-cell aksiWrapper" data-label="Data Presensi"><a href="data-presensi?acara=${item.id_acara}"><i class="fa-solid fa-eye iconAksi"></i></a></div>
-					<div class="flex-cell aksiWrapper" data-label="Link Presensi"><a href="/?acara=${item.id_acara}"><i class="fa-solid fa-link iconAksi"></i></a></div>
+					<div class="flex-cell aksiWrapper" data-label="Link Presensi">
+						<a href="/?acara=${item.id_acara}"><i class="fa-solid fa-link iconAksi"></i></a>
+						<a href="/dashboard?acara=${item.id_acara}"><i class="fa-solid fa-gauge iconAksi"></i></a>
+					</div>
 					<div class="flex-cell aksiWrapper" data-label="Aksi"><i class="fa-solid fa-edit iconAksi"></i></div>
 				`;
 				
@@ -531,5 +546,6 @@ setupHeader('Kelola Acara');
 // Panggil fungsi tambahAcara() untuk mengaktifkan event listener tombol 'btnTambahAcara'
 tambahAcara();
 
-
 setupLogout('btnLogout');
+
+initApp();
