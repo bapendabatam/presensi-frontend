@@ -127,17 +127,6 @@ if (!idAcara || idAcara.trim() === "") {
 			return;
 		}
 		
-		// Validasi ID SubGroup (Wajib dipilih)
-		if (!idSubGroup) {
-			showStatus('warning', 'Organisasi wajib dipilih!');
-			return;
-		}
-		// Pastikan nilainya adalah angka (sebagai ID)
-		if (isNaN(parseInt(idSubGroup))) {
-			showStatus('warning', 'Organisasi yang dipilih tidak valid.');
-			return;
-		}
-		
 		// Validasi idGender (Wajib dipilih)
 		if (!idGender) {
 			showStatus('warning', 'Gender wajib dipilih!');
@@ -146,6 +135,17 @@ if (!idAcara || idAcara.trim() === "") {
 		// Pastikan nilainya adalah angka (sebagai ID)
 		if (isNaN(parseInt(idGender))) {
 			showStatus('warning', 'Gender yang dipilih tidak valid.');
+			return;
+		}
+		
+		// Validasi ID SubGroup (Wajib dipilih)
+		if (!idSubGroup) {
+			showStatus('warning', 'Organisasi wajib dipilih!');
+			return;
+		}
+		// Pastikan nilainya adalah angka (sebagai ID)
+		if (isNaN(parseInt(idSubGroup))) {
+			showStatus('warning', 'Organisasi yang dipilih tidak valid.');
 			return;
 		}
 		
@@ -278,15 +278,18 @@ if (!idAcara || idAcara.trim() === "") {
 				e.target.email.value = "";
 				
 				if (subGroupChoicesInstance) {
-					subGroupChoicesInstance.setChoiceByValue('');
+					subGroupChoicesInstance.removeActiveItems(); 
+					subGroupChoicesInstance.setChoiceByValue("");
 				}
 				
 				if (genderChoicesInstance) {
-					genderChoicesInstance.setChoiceByValue('');
+					genderChoicesInstance.removeActiveItems();
+					genderChoicesInstance.setChoiceByValue("");
 				}
 				
 				if (jenisKepegawaianChoicesInstance) {
-					jenisKepegawaianChoicesInstance.setChoiceByValue('');
+					jenisKepegawaianChoicesInstance.removeActiveItems();
+					jenisKepegawaianChoicesInstance.setChoiceByValue("");
 				}
 			} else {
 				showStatus('warning', result.error || result.message);
@@ -462,7 +465,7 @@ function initSubGroupChoices(subGroup) {
 		value: '',
 		label: 'Pilih Organisasi',
 		selected: true,
-		disabled: true,
+		disabled: false,
 	});
 	
 	subGroupChoicesInstance = new Choices(selectElement, {
@@ -496,7 +499,7 @@ function initJenisKepegawaianChoices(jenisKepegawaian) {
 		value: '',
 		label: 'Pilih Jenis Kepegawaian',
 		selected: true,
-		disabled: true,
+		disabled: false,
 	});
 	
 	jenisKepegawaianChoicesInstance = new Choices(selectElement, {
@@ -530,7 +533,7 @@ function initGenderChoices(gender) {
 		value: '',
 		label: 'Pilih Gender',
 		selected: true,
-		disabled: true,
+		disabled: false,
 	});
 	
 	genderChoicesInstance = new Choices(selectElement, {
