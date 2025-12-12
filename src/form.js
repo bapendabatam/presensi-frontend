@@ -145,7 +145,18 @@ if (!idAcara || idAcara.trim() === "") {
 		}
 		// Pastikan nilainya adalah angka (sebagai ID)
 		if (isNaN(parseInt(idGender))) {
-			showStatus('warning', 'Organisasi yang dipilih tidak valid.');
+			showStatus('warning', 'Gender yang dipilih tidak valid.');
+			return;
+		}
+		
+		// Validasi idJenisKepegawaian (Wajib dipilih)
+		if (!idJenisKepegawaian) {
+			showStatus('warning', 'Jenis Kepegawaian wajib dipilih!');
+			return;
+		}
+		// Pastikan nilainya adalah angka (sebagai ID)
+		if (isNaN(parseInt(idJenisKepegawaian))) {
+			showStatus('warning', 'Jenis Kepegawaian yang dipilih tidak valid.');
 			return;
 		}
 		
