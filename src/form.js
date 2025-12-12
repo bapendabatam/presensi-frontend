@@ -26,6 +26,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 let subGroupChoicesInstance = null;
 let genderChoicesInstance = null;
+let jenisKepegawaianChoicesInstance = null;
 
 const params = new URLSearchParams(window.location.search);
 const idAcara = params.get('acara');
@@ -47,19 +48,23 @@ if (!idAcara || idAcara.trim() === "") {
 		const nama = e.target.nama.value.trim();
 		const jabatan = e.target.jabatan.value.trim();
 		const noHp = e.target.noHp.value.trim();
+		const email = e.target.email.value.trim();
 		
 		const idDevice = getDeviceId();
 		
 		let idSubGroup;
-		
 		if (subGroupChoicesInstance) {
 			idSubGroup = subGroupChoicesInstance.getValue(true) || "";
 		}
 		
 		let idGender;
-		
 		if (genderChoicesInstance) {
-			idGender = subGroupChoicesInstance.getValue(true) || "";
+			idGender = genderChoicesInstance.getValue(true) || "";
+		}
+		
+		let idJenisKepegawaian;
+		if (jenisKepegawaianChoicesInstance) {
+			idJenisKepegawaian = genderChoicesInstance.getValue(true) || "";
 		}
 		
 		// === VALIDASI INPUT ===
@@ -88,6 +93,19 @@ if (!idAcara || idAcara.trim() === "") {
 		
 		if (!/^[0-9+]+$/.test(noHp)) {
 			showStatus('warning', 'Nomor HP hanya boleh mengandung angka dan tanda plus (+).');
+			return;
+		}
+		
+		// Validasi email
+		if (!email || email.length > 100) {
+			showStatus('warning', 'Email wajib diisi dan maksimal 100 karakter.');
+			return;
+		}
+		
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+	
+		if (!emailRegex.test(email)) {
+			showStatus('warning', 'Format email tidak valid.');
 			return;
 		}
 		
@@ -120,16 +138,17 @@ if (!idAcara || idAcara.trim() === "") {
 			return;
 		}
 		
-		// Validasi ID gender (Wajib dipilih)
+		// Validasi idGender (Wajib dipilih)
 		if (!idGender) {
 			showStatus('warning', 'Gender wajib dipilih!');
 			return;
 		}
 		// Pastikan nilainya adalah angka (sebagai ID)
 		if (isNaN(parseInt(idGender))) {
-			showStatus('warning', 'Gender yang dipilih tidak valid.');
+			showStatus('warning', 'Organisasi yang dipilih tidak valid.');
 			return;
 		}
+		
 		// === END OF VALIDASI INPUT ===
 		
 		// Format pesan dikirim ke HTTP POST
@@ -137,8 +156,10 @@ if (!idAcara || idAcara.trim() === "") {
 			idAcara: idAcara,
 			nama: nama,
 			jabatan: jabatan,
-			gender: gender,
+			idJenisKepegawaian: idJenisKepegawaian,  
+			idGender: idGender,
 			noHp: noHp,
+			email: email;
 			latitude: usrLat,
 			longitude: usrLng,
 			idDevice: idDevice,
@@ -243,9 +264,18 @@ if (!idAcara || idAcara.trim() === "") {
 				e.target.nama.value = "";
 				e.target.jabatan.value = "";
 				e.target.noHp.value = "";
+				e.target.email.value = "";
 				
 				if (subGroupChoicesInstance) {
 					subGroupChoicesInstance.setChoiceByValue('');
+				}
+				
+				if (genderChoicesInstance) {
+					genderChoicesInstance.setChoiceByValue('');
+				}
+				
+				if (jenisKepegawaianChoicesInstance) {
+					jenisKepegawaianChoicesInstance.setChoiceByValue('');
 				}
 			} else {
 				showStatus('warning', result.error || result.message);
@@ -393,13 +423,12 @@ async function tampilForm(data) {
 	closeStatus();
 	
 	initSubGroupChoices(data.subGroup);
-	initGenderChoices();
+	initJenisKepegawaianChoices(data.jenisKepegawaian);
+	initGenderChoices(data.gender);
 }
 
 function initSubGroupChoices(subGroup) {
 	const selectElement = document.getElementById("subGroup");
-	
-	selectElement.innerHTML = '';
 
 	if (subGroupChoicesInstance) {
 		subGroupChoicesInstance.destroy();
@@ -424,7 +453,73 @@ function initSubGroupChoices(subGroup) {
 	
 	subGroupChoicesInstance = new Choices(selectElement, {
 		shouldSort: false,
-		allowHTML: true,
+		allowHTML: false,
+		placeholder: true,
+		itemSelectText: '',
+		choices: choicesOptions,
+	});
+}
+
+function initJenisKepegawaianChoices(jenisKepegawaian) {
+	const selectElement = document.getElementById("jenisKepegawaian");
+
+	if (jenisKepegawaianChoicesInstance) {
+		jenisKepegawaianChoicesInstance.destroy();
+		selectElement.innerHTML = '';
+	}
+	
+	const safeJenisKepegawaian = Array.isArray(jenisKepegawaian) ? jenisKepegawaian : [];
+
+	const choicesOptions = safeJenisKepegawaian.map((row) => ({
+		value: row.id_jenisKepegawaian.toString(),
+		label: row.jenis_kepegawaian,
+		selected: false,
+		disabled: false,
+	}));
+	
+	choicesOptions.unshift({
+		value: '',
+		label: 'Pilih Jenis Kepegawaian',
+		selected: true,
+		disabled: true,
+	});
+	
+	jenisKepegawaianChoicesInstance = new Choices(selectElement, {
+		shouldSort: false,
+		allowHTML: false,
+		placeholder: true,
+		itemSelectText: '',
+		choices: choicesOptions,
+	});
+}
+
+function initGenderChoices(gender) {
+	const selectElement = document.getElementById("gender");
+
+	if (genderChoicesInstance) {
+		genderChoicesInstance.destroy();
+		selectElement.innerHTML = '';
+	}
+	
+	const safeGender = Array.isArray(gender) ? gender : [];
+
+	const choicesOptions = safeGender.map((row) => ({
+		value: row.id_gender.toString(),
+		label: row.gender,
+		selected: false,
+		disabled: false,
+	}));
+	
+	choicesOptions.unshift({
+		value: '',
+		label: 'Pilih Gender',
+		selected: true,
+		disabled: true,
+	});
+	
+	genderChoicesInstance = new Choices(selectElement, {
+		shouldSort: false,
+		allowHTML: false,
 		placeholder: true,
 		itemSelectText: '',
 		choices: choicesOptions,
