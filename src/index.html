@@ -42,7 +42,9 @@
 			
 			<div class="inputForm">
 				<label for="gender">Gender</label>
-				<input class="boxInput" type="text" name="gender" maxlength="9" required />
+				<select name="gender" id="gender">
+					<option value="">Memuat...</option>
+				</select>
 			</div>
 			
 			<div class="inputForm">
@@ -51,8 +53,20 @@
 			</div>
 
 			<div class="inputForm">
+				<label for="email">Email</label>
+				<input class="boxInput" type="email" name="email" maxlength="100" required />
+			</div>
+
+			<div class="inputForm">
 				<label for="subGroup">Organisasi</label>
 				<select name="subGroup" id="subGroup">
+					<option value="">Memuat...</option>
+				</select>
+			</div>
+			
+			<div class="inputForm">
+				<label for="jenisKepegawaian">Jenis Kepegawaian</label>
+				<select name="jenisKepegawaian" id="jenisKepegawaian">
 					<option value="">Memuat...</option>
 				</select>
 			</div>

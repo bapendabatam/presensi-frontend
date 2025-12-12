@@ -64,7 +64,7 @@ if (!idAcara || idAcara.trim() === "") {
 		
 		let idJenisKepegawaian;
 		if (jenisKepegawaianChoicesInstance) {
-			idJenisKepegawaian = genderChoicesInstance.getValue(true) || "";
+			idJenisKepegawaian = jenisKepegawaianChoicesInstance.getValue(true) || "";
 		}
 		
 		// === VALIDASI INPUT ===
@@ -159,7 +159,7 @@ if (!idAcara || idAcara.trim() === "") {
 			idJenisKepegawaian: idJenisKepegawaian,  
 			idGender: idGender,
 			noHp: noHp,
-			email: email;
+			email: email,
 			latitude: usrLat,
 			longitude: usrLng,
 			idDevice: idDevice,
@@ -314,7 +314,9 @@ async function fetchAndInit(id) {
 			radius: detailAcara.radius,
 			tanggal: detailAcara.tanggal,
 			jam: detailAcara.jam,
-			subGroup: stats.subGroup || [] // Ambil subGroup dari stats
+			subGroup: stats.subGroup || [],
+			gender: stats.gender || [],
+			jenisKepegawaian: stats.jenisKepegawaian || []
 		}
 		
 		document.getElementById("namaAcara").style.display = "block";
@@ -429,7 +431,8 @@ async function tampilForm(data) {
 
 function initSubGroupChoices(subGroup) {
 	const selectElement = document.getElementById("subGroup");
-
+	
+	selectElement.innerHTML = '';
 	if (subGroupChoicesInstance) {
 		subGroupChoicesInstance.destroy();
 		selectElement.innerHTML = '';
@@ -463,6 +466,7 @@ function initSubGroupChoices(subGroup) {
 function initJenisKepegawaianChoices(jenisKepegawaian) {
 	const selectElement = document.getElementById("jenisKepegawaian");
 
+	selectElement.innerHTML = '';
 	if (jenisKepegawaianChoicesInstance) {
 		jenisKepegawaianChoicesInstance.destroy();
 		selectElement.innerHTML = '';
@@ -471,7 +475,7 @@ function initJenisKepegawaianChoices(jenisKepegawaian) {
 	const safeJenisKepegawaian = Array.isArray(jenisKepegawaian) ? jenisKepegawaian : [];
 
 	const choicesOptions = safeJenisKepegawaian.map((row) => ({
-		value: row.id_jenisKepegawaian.toString(),
+		value: row.id_jenis_kepegawaian.toString(),
 		label: row.jenis_kepegawaian,
 		selected: false,
 		disabled: false,
@@ -496,6 +500,7 @@ function initJenisKepegawaianChoices(jenisKepegawaian) {
 function initGenderChoices(gender) {
 	const selectElement = document.getElementById("gender");
 
+	selectElement.innerHTML = '';
 	if (genderChoicesInstance) {
 		genderChoicesInstance.destroy();
 		selectElement.innerHTML = '';

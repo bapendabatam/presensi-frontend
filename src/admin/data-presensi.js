@@ -30,9 +30,12 @@ const PRESENSI_FIELDS = [
 		});
 	}},
 	{ label: 'Nama', value: 'nama' },
-	{ label: 'Jabatan', value: 'jabatan' },
-	{ label: 'No. HP', value: 'no_hp' },
 	{ label: 'Organisasi', value: 'nama_subgroup' },
+	{ label: 'Jabatan', value: 'jabatan' },
+	{ label: 'Jenis Kepegawaian', value: 'jenis_kepegawaian' },
+	{ label: 'Gender', value: 'gender' },
+	{ label: 'No. HP', value: 'no_hp' },
+	{ label: 'Email', value: 'email' },
 	{ label: 'Latitude', value: 'latitude' },
 	{ label: 'Longitude', value: 'longitude' },
 	{ label: 'ID Device', value: 'id_device' },
@@ -42,9 +45,12 @@ const PRESENSI_COL_WIDTHS = [
 	{ wch: 5 },  // 1. Kolom 'No'
 	{ wch: 20 }, // 2. Kolom 'Waktu'
 	{ wch: 20 }, // 3. Kolom 'Nama'
-	{ wch: 17 }, // 4. Kolom 'Jabatan'
-	{ wch: 15 }, // 5. Kolom 'No. HP'
 	{ wch: 18 }, // 6. Kolom 'Organisasi'
+	{ wch: 17 }, // 4. Kolom 'Jabatan'
+	{ wch: 17 }, // 4. Kolom 'Jenis Kepegawaian'
+	{ wch: 17 }, // 4. Kolom 'Gender'
+	{ wch: 15 }, // 5. Kolom 'No. HP'
+	{ wch: 15 }, // 5. Kolom 'Email'
 	{ wch: 10 }, // 7. Kolom 'Latitude'
 	{ wch: 10 }, // 8. Kolom 'Longitude'
 	{ wch: 15 }  // 9. Kolom 'ID Device'
@@ -136,9 +142,12 @@ if (checkAdminAuth()) {
 						<div class="flex-cell col-no" data-label="No">${index + 1}</div>
 						<div class="flex-cell" data-label="Waktu">${waktuFormatted}</div>
 						<div class="flex-cell" data-label="Nama">${item.nama}</div>
-						<div class="flex-cell" data-label="Jabatan">${item.jabatan}</div>
-						<div class="flex-cell" data-label="No. HP">${item.no_hp}</div>
 						<div class="flex-cell" data-label="Organisasi">${item.nama_subgroup}</div>
+						<div class="flex-cell" data-label="Jabatan">${item.jabatan}</div>
+						<div class="flex-cell" data-label="Jenis Kepegawaian">${item.jenis_kepegawaian}</div>
+						<div class="flex-cell" data-label="Gender">${item.gender}</div>
+						<div class="flex-cell" data-label="No. HP">${item.no_hp}</div>
+						<div class="flex-cell" data-label="Email">${item.email}</div>
 						<div class="flex-cell" data-label="Latitude">${item.latitude}</div>
 						<div class="flex-cell" data-label="Longitude">${item.longitude}</div>
 						<div class="flex-cell" data-label="ID Device">${item.id_device}</div>
@@ -169,9 +178,12 @@ if (checkAdminAuth()) {
 						<div class="flex-cell col-no" data-label="No"></div>
 						<div class="flex-cell" data-label="Waktu">${waktuFormatted}</div>
 						<div class="flex-cell" data-label="Nama">${item.nama}</div>
-						<div class="flex-cell" data-label="Jabatan">${item.jabatan}</div>
-						<div class="flex-cell" data-label="No. HP">${item.no_hp}</div>
 						<div class="flex-cell" data-label="Organisasi">${item.nama_subgroup}</div>
+						<div class="flex-cell" data-label="Jabatan">${item.jabatan}</div>
+						<div class="flex-cell" data-label="Jenis Kepegawaian">${item.jenis_kepegawaian}</div>
+						<div class="flex-cell" data-label="Gender">${item.gender}</div>
+						<div class="flex-cell" data-label="No. HP">${item.no_hp}</div>
+						<div class="flex-cell" data-label="Email">${item.email}</div>
 						<div class="flex-cell" data-label="Latitude">${item.latitude}</div>
 						<div class="flex-cell" data-label="Longitude">${item.longitude}</div>
 						<div class="flex-cell" data-label="ID Device">${item.id_device}</div>
