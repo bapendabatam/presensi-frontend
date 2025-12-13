@@ -320,7 +320,7 @@ function closeFloat(closeElement) {
 	if (closeElement) {
 		const wrapperFloat = closeElement.parentElement.parentElement;
 		
-		if (wrapperFloat &&  wrapperFloat.classList.contains("wrapperFloat")) {
+		if (wrapperFloat && wrapperFloat.classList.contains("wrapperFloat")) {
 			wrapperFloat.classList.remove("flexShow");
 		}
 	}

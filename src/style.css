@@ -96,8 +96,18 @@ body {
 	border-radius: 6px;
 }
 
+#successPresensi {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .statusText {
-	flex: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	margin-bottom: 15px;
 	font-size: 16px;
 }
@@ -106,6 +116,7 @@ body {
 	position: relative;
 	padding: 20px;
 	width: 90%;
+	max-width: 500px;
 	min-height: 150px;
 	display: flex;
 	flex-direction: column;
@@ -248,13 +259,74 @@ body {
 	display: contents; /* agar anak-anaknya (label dan value) masuk ke grid yang sama */
 }
 
+#divJmlPesertaPresensi {
+	display: flex;
+}
+
+#divJmlPesertaPresensi .value {
+	border: none;
+}
+
+#statsWrapper {
+	display: none; /* to flex */
+	flex-direction: column;
+	margin: 10px;
+}
+
+#statsFlex {
+	display: flex;
+	gap: 10px;
+}
+
+.statsCard {
+	border-radius: 6px;
+	border: 1px solid #ddd;
+}
+
+.statsAcara {
+	display: flex;
+}
+
+#buktiPresensi {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	word-wrap: break-word;
+}
+
+.msgTitle {
+	text-align: center;
+	font-weight: bold;
+	padding: 4px;
+	font-size: 18px;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 15px;
+}
+
+.gridWrapper {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+}
+
+.gridContent {
+	display: contents;
+}
+
 .value {
 	border: 1px solid #000;
 	padding: 4px;
 }
 
-.detailAcara .value {
+.detailAcara .value, 
+.statsAcara .value,
+.gridContent .value {
 	border: none;
+}
+
+.statsAcara .value {
+	flex: 1;
+	text-align: right;
 }
 
 .map {

@@ -205,19 +205,40 @@ if (!idAcara || idAcara.trim() === "") {
 				if (idPresensiBaru) {
 					const qrCodeContainerId = `qrcode-${Date.now()}`;
 					
-					const successMsg = `
+					const successHtml = `
 					<div id="buktiPresensi" style="text-align: left; padding: 10px;">
-						<div><b>Presensi berhasil!</b></div>
-						<div>ID Presensi: ${idPresensiBaru}</div>
-						<div>Acara: ${namaAcara}</div>
-						<div>Nama: ${namaPeserta}</div>
-						<div>Organisasi: ${namaSubGroup}</div>
+						<i class="statusIcon iconSuccess fa-solid fa-circle-check"></i>
+						<div class="msgTitle">Presensi berhasil!</div>
+						<div class="gridWrapper">
+							<div class="gridContent">
+								<div class="label">ID Presensi:</div>
+								<div class="value">${idPresensiBaru}</div>
+							</div>
+							<div class="gridContent">
+								<div class="label">Acara:</div>
+								<div class="value">${namaAcara}</div>
+							</div>
+							<div class="gridContent">
+								<div class="label">Nama:</div>
+								<div class="value">${namaPeserta}</div>
+							</div>
+							<div class="gridContent">
+								<div class="label">Organisasi:</div>
+								<div class="value">${namaSubGroup}</div>
+							</div>
+						</div>
 						<div id="${qrCodeContainerId}" style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd; display: flex; justify-content: center;"></div>
 					</div>
-					<button id="btnDownloadBuktiPresensi" class="btn">Unduh Bukti Presensi</button>
+					<button id="btnDownloadBuktiPresensi" class="btn">Download Bukti Presensi</button>
 					`;
 					
-					showStatus('success', successMsg);
+					closeStatus();
+					
+					const wrapperSuccessPresensi = document.getElementById('wrapperSuccessPresensi');
+					const successPresensi = document.getElementById('successPresensi');
+					
+					wrapperSuccessPresensi.classList.add("flexShow");
+					successPresensi.innerHTML = successHtml;
 					
 					setTimeout(() => {
 						const qrContainer = document.getElementById(qrCodeContainerId);
@@ -555,5 +576,16 @@ function getDeviceId() {
 	
 	return deviceId;
 }
+
+function closeFloat(closeElement) {
+	if (closeElement) {
+		const wrapperFloat = closeElement.parentElement.parentElement;
+		
+		if (wrapperFloat && wrapperFloat.classList.contains("wrapperFloat")) {
+			wrapperFloat.classList.remove("flexShow");
+		}
+	}
+}
+window.closeFloat = closeFloat;
 
 setupHeader('Form Presensi');

@@ -12,6 +12,7 @@ const params = new URLSearchParams(window.location.search);
 const idAcara = params.get('acara');
 
 let metadataAcara = {};
+let statsAcara = {};
 let masterDataPresensi = [];
 
 const PRESENSI_FIELDS = [
@@ -45,15 +46,15 @@ const PRESENSI_COL_WIDTHS = [
 	{ wch: 5 },  // 1. Kolom 'No'
 	{ wch: 20 }, // 2. Kolom 'Waktu'
 	{ wch: 20 }, // 3. Kolom 'Nama'
-	{ wch: 18 }, // 6. Kolom 'Organisasi'
-	{ wch: 17 }, // 4. Kolom 'Jabatan'
-	{ wch: 17 }, // 4. Kolom 'Jenis Kepegawaian'
-	{ wch: 17 }, // 4. Kolom 'Gender'
-	{ wch: 15 }, // 5. Kolom 'No. HP'
-	{ wch: 15 }, // 5. Kolom 'Email'
-	{ wch: 10 }, // 7. Kolom 'Latitude'
-	{ wch: 10 }, // 8. Kolom 'Longitude'
-	{ wch: 15 }  // 9. Kolom 'ID Device'
+	{ wch: 18 }, // 4. Kolom 'Organisasi'
+	{ wch: 17 }, // 5. Kolom 'Jabatan'
+	{ wch: 17 }, // 6. Kolom 'Jenis Kepegawaian'
+	{ wch: 17 }, // 7. Kolom 'Gender'
+	{ wch: 15 }, // 8. Kolom 'No. HP'
+	{ wch: 15 }, // 9. Kolom 'Email'
+	{ wch: 10 }, // 10. Kolom 'Latitude'
+	{ wch: 10 }, // 11. Kolom 'Longitude'
+	{ wch: 15 }  // 12. Kolom 'ID Device'
 ];
 
 if (checkAdminAuth()) {
@@ -106,6 +107,7 @@ if (checkAdminAuth()) {
 				document.getElementById("tanggal").innerHTML = acaraDetails.tanggal;
 				document.getElementById("jam").innerHTML = acaraDetails.jam;
 			} else if (data.type === "data_presensi") {
+				// Dipanggil hanya saat pertama kali halaman di-load
 				console.log("Menerima Data Presensi:", data);
 				
 				const dataPresensi = data.results;
@@ -116,6 +118,10 @@ if (checkAdminAuth()) {
 				}
 				
 				masterDataPresensi = dataPresensi;
+				
+				// Perlu di tampilkan dulu elementnya
+				document.getElementById("statsWrapper").style.display = "flex";
+				updateStats();
 				
 				const tabelContainer = document.getElementById("tabelDataPresensi");
 				
@@ -157,8 +163,13 @@ if (checkAdminAuth()) {
 				});
 				renumberTableRows(tabelContainer);
 			} else if (data.type === "realtime_update") {
+				// Kalau ada data baru yg masuk
 				if (data.new_entry) {
 					const item = data.new_entry;
+					
+					masterDataPresensi.push(item);
+					updateStats();
+					
 					const tabelContainer = document.getElementById("tabelDataPresensi");
 					
 					const date = new Date(item.waktu);
@@ -262,6 +273,12 @@ async function exportToXlsx() {
 			jam: metadataAcara.jam
 		}
 		
+		const stats = {
+			jmlLaki: statsAcara.totalLaki,
+			jmlPerempuan: statsAcara.totalPerempuan,
+			jmlPesertaPresensi: statsAcara.totalPesertaPresensi
+		}
+		
 		const formattedTableData = formatTableData(masterDataPresensi, PRESENSI_FIELDS);
 		
 		const customHeader = [
@@ -270,6 +287,14 @@ async function exportToXlsx() {
 			['', 'Acara', `: ${metadata.namaAcara}`],
 			['', 'Tanggal', `: ${metadata.tanggal}`],
 			['', 'Jam Mulai', `: ${metadata.jam}`],
+			[],
+			['', 'Jml. Laki-laki', `: ${stats.jmlLaki}`],
+			['', 'Jml. Perempuan', `: ${stats.jmlPerempuan}`],
+			['', 'Jml. Peserta Presensi', `: ${stats.jmlPesertaPresensi}`],
+			[],
+			['', 'Jml. PNS', `: ${stats.jmlPns}`],
+			['', 'Jml. PPPK', `: ${stats.jmlPppk}`],
+			['', 'Jml. Non-ASN', `: ${stats.jmlNonAsn}`],
 			[],
 			PRESENSI_FIELDS.map(f => f.label)
 		];
@@ -312,6 +337,47 @@ function listenExportXlsx() {
 			exportToXlsx();
 		});
 	}
+}
+
+function updateStats() {
+	if (!masterDataPresensi) return;
+	
+	const totalPesertaPresensi = masterDataPresensi.length;
+	
+	const totalLaki = masterDataPresensi.filter(item => item.gender && item.gender.toLowerCase() === 'laki-laki').length;
+	
+	const totalPerempuan = masterDataPresensi.filter(item => item.gender && item.gender.toLowerCase() === 'perempuan').length;
+	
+	const totalPns = masterDataPresensi.filter(item => item.jenis_kepegawaian && item.jenis_kepegawaian.toLowerCase() === 'pns').length;
+	
+	const totalPppk = masterDataPresensi.filter(item => item.jenis_kepegawaian && item.jenis_kepegawaian.toLowerCase() === 'pppk').length;
+	
+	const totalNonAsn = masterDataPresensi.filter(item => item.jenis_kepegawaian && item.jenis_kepegawaian.toLowerCase() === 'non-asn').length;
+	
+	statsAcara = {
+		totalLaki,
+		totalPerempuan,
+		totalPesertaPresensi,
+		totalPns,
+		totalPppk,
+		totalNonAsn
+	}
+	
+	const elJmlLaki = document.getElementById('jmlLaki');
+	const elJmlPerempuan = document.getElementById('jmlPerempuan');
+	const elJmlPeserta = document.getElementById('jmlPesertaPresensi');
+	
+	const elJmlPns = document.getElementById('jmlPns');
+	const elJmlPppk = document.getElementById('jmlPppk');
+	const elJmlNonAsn = document.getElementById('jmlNonAsn');
+	
+	if (elJmlLaki) elJmlLaki.textContent = totalLaki;
+	if (elJmlPerempuan) elJmlPerempuan.textContent = totalPerempuan;
+	if (elJmlPeserta) elJmlPeserta.textContent = totalPesertaPresensi;
+	
+	if (elJmlPns) elJmlPns.textContent = totalPns;
+	if (elJmlPppk) elJmlPppk.textContent = totalPppk;
+	if (elJmlNonAsn) elJmlNonAsn.textContent = totalNonAsn;
 }
 
 setupHeader('Data Presensi');
